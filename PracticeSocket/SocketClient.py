@@ -1,8 +1,6 @@
 import socket
 
-print("hello")
 client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-print("world")
 server_addr = ('127.0.0.1', 8080)
 print("server info served...")
 
