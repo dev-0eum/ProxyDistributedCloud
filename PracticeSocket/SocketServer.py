@@ -1,22 +1,22 @@
 import socket
 
 # Instance of Socket
-parent_server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-parent_server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 
 # Server(Socket) INFO
 server_address = ('127.0.0.1', 8080)
 print('Start up on {} port {}'.format(*server_address))
 
 # Bind Socket info = socket instance + addr
-parent_server_socket.bind(server_address)
+server_socket.bind(server_address)
 
 # Listen
-parent_server_socket.listen(1)
+server_socket.listen(1)
 
 print('accept wait')
 # 클라이언트 접속 대기
-client_socket, client_addr = parent_server_socket.accept()
+client_socket, client_addr = server_socket.accept()
 
 print("Connected!")
 try:
@@ -44,4 +44,4 @@ try:
             break
 finally:
     client_socket.close()
-    parent_server_socket.close()
+    server_socket.close()
