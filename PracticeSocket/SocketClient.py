@@ -6,26 +6,24 @@ print("world")
 server_addr = ('127.0.0.1', 8080)
 print("server info served...")
 
-client_socket.connect((server_addr))
+client_socket.connect(server_addr)
 print("connected to server")
 
-while True:
-    try:
+try:
+    while True:
         data = input(">> ")
         if data == 'exit':
             break
         data = data.encode()
-        client_socket.send(data)
+        client_socket.sendall(data)
 
-        re = client_socket.recv(1024).decode()
-        print("Server: ",re)
-    finally:
-        pass
+        print("Waiting for Server Response...")
 
-client_socket.close()
-
-
-
-def recv_message():
-	message = client_socket.recv(1024).decode()
-    
+        try:
+            response = client_socket.recv(1024).decode()
+            print("Server: ", response)
+        except ConnectionResetError:
+            print("서버와의 연결이 끊어졌습니다.")
+            break
+finally:
+    client_socket.close()
